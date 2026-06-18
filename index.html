@@ -6,51 +6,54 @@
     <title>BS Electrical Engineering Resource Vault</title>
     <style>
         :root {
-            /* Professional Corporate Workspace Palette (Zoom Blue / Slate Inspired) */
-            --bg: #09122c;
-            --bg-2: #0f1a36;
-            --panel: #111e3d;
-            --panel-2: #16264c;
-            --card: rgba(255, 255, 255, 0.05);
-            --card-hover: rgba(255, 255, 255, 0.09);
-            --text: #f4f7fc;
-            --muted: #9ab0d3;
-            --line: rgba(154, 176, 211, 0.15);
+            /* Universal Gender-Neutral Corporate Workspace Palette (Slate Teal & Deep Plum) */
+            --bg: #0b111e;
+            --bg-2: #121b2d;
+            --panel: #18243c;
+            --panel-2: #1e2d4a;
+            --card: rgba(255, 255, 255, 0.04);
+            --card-hover: rgba(255, 255, 255, 0.08);
+            --text: #f1f5f9;
+            --muted: #94a3b8;
+            --line: rgba(148, 163, 184, 0.15);
             
-            /* Corporate Accent Branding - Replaced glowing neon with solid Zoom Blue / Slate Gold */
-            --accent: #0b5cff;       /* Pure Zoom Blue */
-            --accent-hover: #004be5; /* Deep Accent Blue */
-            --accent-2: #e5a900;     /* Professional Muted Amber */
-            --spark: #2d7fe6;
-            --glow-1: rgba(11, 92, 255, 0.05);
-            --glow-2: rgba(229, 169, 0, 0.02);
-            --shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
-            --radius-xl: 16px;       /* Sharper, clean enterprise corners instead of casual round shapes */
+            /* Gender-Neutral Neon Accents - Professional Balance of Cool Teal and Warm Coral */
+            --accent: #06b6d4;       /* Vivid Slate Teal */
+            --accent-hover: #0891b2; /* Deep Teal */
+            --accent-2: #f43f5e;     /* Coral Rose / Muted Plum */
+            --spark: #38bdf8;
+            
+            /* Refined Neon Light Borders */
+            --neon-glow: 0 0 12px rgba(6, 182, 212, 0.25), 0 0 2px rgba(6, 182, 212, 0.4);
+            --neon-glow-warm: 0 0 12px rgba(244, 63, 94, 0.2), 0 0 2px rgba(244, 63, 94, 0.3);
+            
+            --shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+            --radius-xl: 16px;       
             --radius-lg: 12px;
             --radius-md: 8px;
             --radius-sm: 6px;
-            --modal-overlay: rgba(4, 8, 19, 0.75);
+            --modal-overlay: rgba(11, 17, 30, 0.8);
         }
 
         [data-theme="light"] {
-            /* Crisp Corporate Light Workspace */
-            --bg: #f4f7fc;
+            /* Clean Multi-User Workspace Light Base */
+            --bg: #f8fafc;
             --bg-2: #ffffff;
             --panel: #ffffff;
-            --panel-2: #f7f9fc;
-            --card: rgba(11, 92, 255, 0.03);
-            --card-hover: rgba(11, 92, 255, 0.07);
+            --panel-2: #f1f5f9;
+            --card: rgba(6, 182, 212, 0.03);
+            --card-hover: rgba(6, 182, 212, 0.07);
             --text: #0f172a;
             --muted: #64748b;
             --line: rgba(15, 23, 42, 0.08);
-            --accent: #0b5cff;
-            --accent-hover: #004be5;
-            --accent-2: #b47b00;
-            --spark: #0b5cff;
-            --glow-1: rgba(11, 92, 255, 0.02);
-            --glow-2: transparent;
-            --shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
-            --modal-overlay: rgba(15, 23, 42, 0.4);
+            --accent: #0891b2;
+            --accent-hover: #0369a1;
+            --accent-2: #e11d48;
+            --spark: #0284c7;
+            --neon-glow: 0 2px 8px rgba(6, 182, 212, 0.15);
+            --neon-glow-warm: 0 2px 8px rgba(244, 63, 94, 0.12);
+            --shadow: 0 12px 32px rgba(15, 23, 42, 0.05);
+            --modal-overlay: rgba(15, 23, 42, 0.3);
         }
 
         * {
@@ -68,18 +71,38 @@
             min-height: 100vh;
             transition: background-color 0.3s ease, color 0.3s ease;
             position: relative;
+            overflow-x: hidden;
         }
 
         a {
             color: inherit;
             text-decoration: none;
         }
-        button,
-        input {
+        button, input {
             font: inherit;
         }
 
-        /* Clean Background Architecture */
+        /* ---------- INTRO ENTRANCE ANIMATIONS (FLOATING TEXT/PANELS) ---------- */
+        @keyframes floatUpReveal {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            opacity: 0;
+            animation: floatUpReveal 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .topbar { animation-delay: 0.1s; }
+        .hero { animation-delay: 0.2s; }
+        .layout { animation-delay: 0.3s; }
+
         .bg-fx {
             position: fixed;
             inset: 0;
@@ -95,11 +118,7 @@
         }
         .bg-traces {
             color: var(--accent);
-            opacity: 0.03; /* Subdued for executive presentation layout */
-        }
-        .bg-nodes {
-            color: var(--accent-2);
-            opacity: 0.04;
+            opacity: 0.04; 
         }
         
         .shell {
@@ -110,7 +129,7 @@
             z-index: 1;
         }
 
-        /* Header Navigation Space Bar */
+        /* Topbar Header with Muted Neon Focus Underline */
         .topbar {
             display: flex;
             align-items: center;
@@ -125,6 +144,8 @@
             position: sticky;
             top: 14px;
             z-index: 20;
+            border-bottom: 2px solid rgba(6, 182, 212, 0.4);
+            box-shadow: var(--neon-glow);
         }
 
         .brand {
@@ -139,11 +160,10 @@
             width: 44px;
             height: 44px;
             border-radius: var(--radius-lg);
-            background: var(--accent);
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
             display: grid;
             place-items: center;
             flex: 0 0 auto;
-            transition: background-color 0.2s ease;
         }
 
         .brand-mark svg {
@@ -184,7 +204,6 @@
             text-overflow: ellipsis;
         }
 
-        /* Topbar Search Utility */
         .topbar-search {
             position: relative;
             flex: 1 1 320px;
@@ -213,16 +232,13 @@
             border-radius: var(--radius-md);
             padding: 9px 14px 9px 38px;
             outline: none;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        [data-theme="light"] .topbar-search input {
-            background: #f0f4f9;
+            transition: all 0.2s ease;
         }
 
         .topbar-search input:focus {
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(11, 92, 255, 0.15);
+            background: var(--panel);
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15), var(--neon-glow);
         }
 
         .top-actions {
@@ -251,6 +267,7 @@
         .chip:hover {
             background: var(--card-hover);
             border-color: var(--accent);
+            box-shadow: var(--neon-glow);
         }
 
         .chip svg {
@@ -308,7 +325,6 @@
             flex-wrap: wrap;
         }
 
-        /* Corporate Command Buttons */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -317,7 +333,7 @@
             padding: 10px 20px;
             border-radius: var(--radius-md);
             border: 1px solid transparent;
-            background: var(--accent);
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
             color: #ffffff;
             font-weight: 600;
             font-size: 0.92rem;
@@ -326,8 +342,8 @@
         }
 
         .btn:hover {
-            background: var(--accent-hover);
             transform: translateY(-1px);
+            box-shadow: var(--neon-glow);
         }
 
         .btn.secondary {
@@ -338,10 +354,10 @@
 
         .btn.secondary:hover {
             background: var(--card-hover);
-            border-color: var(--accent);
+            border-color: var(--accent-2);
+            box-shadow: var(--neon-glow-warm);
         }
 
-        /* Analytical Matrix Blocks */
         .stats {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -357,10 +373,6 @@
             flex-direction: column;
             justify-content: space-between;
             transition: border-color 0.2s ease;
-        }
-        
-        [data-theme="light"] .stat {
-            background: #f7f9fc;
         }
 
         .stat:hover {
@@ -380,7 +392,7 @@
             line-height: 1.4;
         }
 
-        /* ---------- DYNAMIC INFRASTRUCTURE LAYOUTS ---------- */
+        /* ---------- WORKSPACE CANVAS LAYOUTS ---------- */
         .layout {
             display: grid;
             grid-template-columns: 340px 1fr 0fr;
@@ -444,14 +456,14 @@
         .mode-indicator {
             font-size: 0.72rem;
             font-weight: 600;
-            background: rgba(11, 92, 255, 0.1);
+            background: rgba(6, 182, 212, 0.1);
             color: var(--accent);
             padding: 3px 8px;
             border-radius: var(--radius-sm);
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            border: 1px solid rgba(11, 92, 255, 0.2);
+            border: 1px solid rgba(6, 182, 212, 0.2);
         }
 
         .mode-indicator .close-indicator {
@@ -459,12 +471,7 @@
             font-weight: 700;
             opacity: 0.7;
         }
-        .mode-indicator .close-indicator:hover {
-            opacity: 1;
-            color: var(--text);
-        }
 
-        /* Navigation Document Tree */
         .tree {
             padding: 12px;
             max-height: 72vh;
@@ -496,15 +503,18 @@
             background: transparent;
             cursor: pointer;
             transition: all 0.15s ease;
+            border: 1px solid transparent;
         }
 
         .node-row:hover {
             background: var(--panel-2);
         }
 
+        /* Active Tree nodes light up with glowing slate teal borders */
         .node-row.active {
-            background: rgba(11, 92, 255, 0.08);
-            border: 1px solid var(--accent);
+            background: rgba(6, 182, 212, 0.08);
+            border-color: var(--accent);
+            box-shadow: var(--neon-glow);
         }
 
         .toggle {
@@ -526,8 +536,7 @@
             fill: currentColor;
         }
 
-        .folder-icon,
-        .file-icon {
+        .folder-icon, .file-icon {
             width: 16px;
             height: 16px;
             flex: 0 0 auto;
@@ -535,8 +544,7 @@
             place-items: center;
         }
 
-        .folder-icon svg,
-        .file-icon svg {
+        .folder-icon svg, .file-icon svg {
             width: 16px;
             height: 16px;
             fill: currentColor;
@@ -608,7 +616,7 @@
             font-size: 0.88rem;
         }
 
-        /* Module Workspace Card Deck */
+        /* Module Workspace Cards */
         .cards {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -624,18 +632,21 @@
             background: var(--panel-2);
             border-radius: var(--radius-lg);
             padding: 20px;
-            transition: all 0.2s ease;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
         }
         
-        [data-theme="light"] .card {
-            background: #ffffff;
-        }
-
-        .card:hover {
+        /* Semesters Card Glows Cool Teal, Projects Card Glows Plum Rose */
+        .card:nth-child(1):hover {
             border-color: var(--accent);
             transform: translateY(-2px);
-            box-shadow: var(--shadow);
+            box-shadow: var(--neon-glow);
+        }
+
+        .card:nth-child(2):hover {
+            border-color: var(--accent-2);
+            transform: translateY(-2px);
+            box-shadow: var(--neon-glow-warm);
         }
 
         .card-top {
@@ -651,11 +662,13 @@
             border-radius: var(--radius-md);
             display: grid;
             place-items: center;
-            background: rgba(11, 92, 255, 0.06);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--line);
-            color: var(--accent);
             flex: 0 0 auto;
         }
+
+        .card:nth-child(1) .card-badge { color: var(--accent); }
+        .card:nth-child(2) .card-badge { color: var(--accent-2); }
 
         .card-badge svg {
             width: 18px;
@@ -699,21 +712,26 @@
 
         .mini-link:hover {
             background: var(--panel-2);
-            border-color: var(--accent);
-            color: var(--accent);
+            color: var(--text);
         }
+        
+        .card:nth-child(1) .mini-link:hover { border-color: var(--accent); }
+        .card:nth-child(2) .mini-link:hover { border-color: var(--accent-2); }
+
         .mini-link svg {
             width: 13px;
             height: 13px;
             stroke: currentColor;
         }
 
-        /* ---------- DYNAMIC SUB-WORKSPACE PREVIEWER ---------- */
+        /* ---------- SPLIT COMPONENT VIEW PREVIEWER ---------- */
         #context-column {
             opacity: 0;
             visibility: hidden;
             transform: translateX(8px);
             transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease, visibility 0.25s ease;
+            border-top: 2px solid var(--accent);
+            box-shadow: var(--neon-glow);
         }
 
         .layout[data-mode="split"] #context-column {
@@ -751,14 +769,11 @@
             border: 1px solid var(--line);
             transition: all 0.2s ease;
         }
-        
-        [data-theme="light"] .preview-item {
-            background: #f7f9fc;
-        }
 
         .preview-item:hover {
             border-color: var(--accent);
             background: var(--card-hover);
+            box-shadow: var(--neon-glow);
         }
 
         .preview-meta-title {
@@ -769,7 +784,6 @@
             letter-spacing: 0.04em;
         }
 
-        /* Footer Workspace Design */
         .footer {
             margin-top: 24px;
             padding: 24px;
@@ -784,7 +798,6 @@
             margin: 0 0 8px;
         }
         .footer-link-row {
-            margin-top: 0px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -812,16 +825,17 @@
             background: var(--accent);
             color: #ffffff;
             border-color: var(--accent);
+            box-shadow: var(--neon-glow);
         }
 
         .hidden { display: none !important; }
         
         .highlight {
-            background: rgba(11, 92, 255, 0.12);
+            background: rgba(6, 182, 212, 0.12);
             border-radius: var(--radius-sm);
         }
 
-        /* ---------- CLEAN ENTERPRISE MODALS ---------- */
+        /* ---------- MODALS ---------- */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -850,7 +864,7 @@
             width: min(400px, 100%);
             max-height: 85vh;
             overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            box-shadow: var(--shadow);
             border: 1px solid var(--line);
             z-index: 1;
             transform: translateY(8px);
@@ -946,7 +960,7 @@
 
         .theme-option.active {
             border-color: var(--accent);
-            background: rgba(11, 92, 255, 0.05);
+            background: rgba(6, 182, 212, 0.05);
         }
 
         .theme-option-icon {
@@ -1022,8 +1036,6 @@
                         <path d="M0 40 H70 L90 60 V120 L110 140 H240" />
                         <path d="M20 0 V30 L40 50 H140 L160 70 V160 L180 180 H240" />
                         <path d="M0 200 H60 L80 220 H160" />
-                        <path d="M200 0 V60 L220 80 V160" />
-                        <path d="M0 120 L20 140 V200" />
                     </g>
                 </pattern>
             </defs>
@@ -1032,7 +1044,7 @@
     </div>
 
     <div class="shell">
-        <header class="topbar">
+        <header class="topbar animate-fade-in">
             <div class="brand">
                 <div class="brand-mark" aria-hidden="true">
                     <svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
@@ -1063,7 +1075,7 @@
             </div>
         </header>
 
-        <section class="hero">
+        <section class="hero animate-fade-in">
             <div class="hero-grid">
                 <div>
                     <h2>Welcome to <span class="accent-word">BSEE Resource Vault</span>, Curated by BSEE 25-29 Batch.</h2>
@@ -1097,7 +1109,7 @@
             </div>
         </section>
 
-        <section class="layout" id="vault" data-mode="default">
+        <section class="layout animate-fade-in" id="vault" data-mode="default">
             
             <aside class="panel" id="tree-sidebar-panel">
                 <div class="panel-head">
@@ -1703,7 +1715,7 @@
             updateCount();
         }
 
-        /* ---------- MODAL SYSTEM ---------- */
+        /* ---------- MODALS ---------- */
         function openModal(overlay) {
             overlay.classList.add('open');
             overlay.setAttribute('aria-hidden', 'false');
